@@ -2,6 +2,7 @@ package com.springboot.api.controller;
 
 import java.util.Map;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,14 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.api.dto.MemberDto;
 
+import ch.qos.logback.classic.Logger;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/api/v1/get-api")
 public class GetController {
     
+    private final Logger LOGGER = (Logger) LoggerFactory.getLogger(GetController.class);
+
     // @RequestMapping 으로 구현하기
     // Path : https://springboot-gwbpo.run.goorm.app/api/v1/get-api/hello
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String getHello() {
+        LOGGER.info("getHello 메서드가 호출되었습니다.");
         return "Hello, World!";
     }
 
@@ -26,6 +33,7 @@ public class GetController {
     // Path : https://springboot-gwbpo.run.goorm.app/api/v1/get-api/name
     @GetMapping(value = "/name")
     public String getName() {
+        LOGGER.info("getName 메서드가 호출되었습니다.");
         return "Pongchi";
     }
 
@@ -45,6 +53,7 @@ public class GetController {
 
     // @RequestParam 을 이용한 GET 메서드
     // Path : https://springboot-gwbpo.run.goorm.app/api/v1/get-api/request1?name=value1&email=value2&organization=value3
+    @ApiOperation(value = "GET 메서드 예제", notes = "@RequestParam을 활용한 GET Method")
     @GetMapping(value = "/request1")
     public String getRequestParam1(
         @RequestParam String name,
